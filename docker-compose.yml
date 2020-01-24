@@ -1,0 +1,57 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:11
+    container_name: 'node_queue_db'
+    volumes:
+      - node-queue:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=boilerplate
+      - POSTGRES_DB=node_queue
+      - POSTGRES_PORT=5433
+    ports:
+      - 5433:5432
+    networks:
+      - net
+
+  boilerplate:
+    image: node:11
+    container_name: 'node_queue'
+    build: .
+    depends_on:
+      - postgres
+      - rabbitmq
+    env_file:
+      - .env
+    environment:
+      DB_HOST: host.docker.internal
+    volumes:
+      - .:/app/
+    ports:
+      - 5000:5000
+    working_dir: /app/
+    network_mode: host
+    command: npm run dev
+
+  rabbitmq:
+    container_name: rabbitmq_queue
+    image: "rabbitmq:3"
+    hostname: "rabbitmq"
+    environment: 
+      - RABBITMQ_ERLANG_COOKIE=SWQOKODSQALRPCLNMEQG
+      - RABBITMQ_DEFAULT_USER=rabbitmq
+      - RABBITMQ_DEFAULT_PASS=rabbitmq
+      - RABBITMQ_DEFAULT_VHOST=/
+    ports:
+      - 15672:15672
+      - 5672:5672
+    labels:
+      NAME: "rabbitmq_queue"
+
+volumes:
+  node-queue:
+
+networks:
+  net:
+    driver: bridge
