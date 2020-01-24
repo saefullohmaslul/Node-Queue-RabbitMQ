@@ -1,19 +1,20 @@
-# Node Cache Redis
+# Node Queue RabbitMQ
 
-Caching and speed up :rocket: your API with redis!
+Queue process with Node JS and RabbitMQ!
 
-## Feature
+## Features
 
-- Wikipedia search API
-- Cache the result with Redis
-- Run with ```docker-compose```
-- This project write with typescript bro
+- Queue Process
+- Send Email
+- Typescript
+- Docker
 
 ## Running With Docker Compose
 
 ### Install Docker and Docker Compose
 
 - [Install Docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04)
+
 - [Install Docker Compose](https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04)
 
 ```bash
